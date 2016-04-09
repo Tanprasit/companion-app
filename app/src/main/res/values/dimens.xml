@@ -3,4 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="textview_padding">16dp</dimen>
+    <dimen name="textview_margin">16dp</dimen>
+    <dimen name="text_large_size">16sp</dimen>
+    <dimen name="text_medium_size">14sp</dimen>
+    <dimen name="text_small_size">12sp</dimen>
+    <dimen name="text_very_large_size">45sp</dimen>
+    <dimen name="login_header_margin_top">112sp</dimen>
 </resources>
