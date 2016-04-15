@@ -1,4 +1,4 @@
-package example.tanprasit.com.companion_app;
+package example.tanprasit.com.companion_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import example.tanprasit.com.companion_app.R;
 
 public class MainActivity extends AppCompatActivity {
 
