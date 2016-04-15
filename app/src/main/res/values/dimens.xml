@@ -10,4 +10,7 @@
     <dimen name="text_small_size">12sp</dimen>
     <dimen name="text_very_large_size">45sp</dimen>
     <dimen name="login_header_margin_top">112sp</dimen>
+    <dimen name="relative_layout_padding">16dp</dimen>
+    <dimen name="linear_layout_padding">16dp</dimen>
+    <dimen name="card_view_padding">16dp</dimen>
 </resources>

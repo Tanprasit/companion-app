@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
@@ -12,30 +11,29 @@ import com.android.volley.toolbox.Volley;
  */
 public class VolleySingleton {
 
-    private static VolleySingleton mInstance;
-    private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
-    private static Context mCtx;
+    private static VolleySingleton instance;
+    private RequestQueue requestQueue;
+    private static Context context;
 
     private VolleySingleton(Context context) {
-        mCtx = context;
-        mRequestQueue = getRequestQueue();
+        VolleySingleton.context = context;
+        requestQueue = getRequestQueue();
     }
 
     public static synchronized VolleySingleton getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new VolleySingleton(context);
+        if (instance == null) {
+            instance = new VolleySingleton(context);
         }
-        return mInstance;
+        return instance;
     }
 
     public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
+        if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
-        return mRequestQueue;
+        return requestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> req) {

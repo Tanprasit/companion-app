@@ -80,7 +80,7 @@ public class RequestTask {
                 if (nr != null && nr.statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     handleChallenge(error, url, Constants.POST);
                 } else {
-                    Log.e("Post req error", error.getCause().getMessage());
+                    Log.e("Post req error", "Post request failed");
                 }
             }
         }) {

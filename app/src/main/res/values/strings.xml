@@ -22,4 +22,9 @@
     <string name="sign_in">SIGN IN</string>
     <string name="login_background">login_background</string>
     <string name="Eastland">Eastland</string>
+    <string name="email">Email</string>
+    <string name="title_activity_key">KeyActivity</string>
+    <string name="Taken">Taken</string>
+    <string name="Returned">Returned</string>
+    <string name="Take_Key">Take Key</string>
 </resources>

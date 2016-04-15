@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,13 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="example.tanprasit.com.companion_app.LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <TextView
-        android:layout_above="@+id/login_username_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/login_username_field"
         android:layout_marginBottom="@dimen/textview_margin"
         android:gravity="center"
         android:text="@string/Eastland"
@@ -28,7 +26,7 @@
         android:layout_above="@+id/login_password_field"
         android:layout_marginBottom="@dimen/navigation_padding_top_default"
         android:background="@drawable/border"
-        android:hint="@string/Username"
+        android:hint="@string/email"
         android:inputType="text"
         android:padding="@dimen/textview_padding"
         android:textColor="@color/primary_text_default_material_dark"
@@ -55,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/login_password_field"
         android:background="@color/material_deep_teal_500"
+        android:onClick="login"
         android:padding="@dimen/textview_padding"
         android:text="@string/sign_in"
         android:textColor="@color/primary_text_default_material_dark"
