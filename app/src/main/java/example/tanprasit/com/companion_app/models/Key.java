@@ -3,6 +3,7 @@ package example.tanprasit.com.companion_app.models;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import example.tanprasit.com.companion_app.Constants;
 import example.tanprasit.com.companion_app.tools.TimeHelper;
 
 /**
@@ -43,7 +44,10 @@ public class Key {
 
     public DateTime getTakenAt() {
         String pattern = "YYYY-MM-dd HH:mm:ss";
-        return DateTime.parse(this.takenAt,  DateTimeFormat.forPattern(pattern));
+
+        return (this.takenAt.equals(Constants.NULL_JODATIME))
+                ? null
+                : DateTime.parse(this.takenAt,  DateTimeFormat.forPattern(pattern));
     }
 
     public void setTakenAt(String takenAt) {
@@ -52,7 +56,9 @@ public class Key {
 
     public DateTime getReturnedAt() {
         String pattern = "YYYY-MM-dd HH:mm:ss";
-        return DateTime.parse(this.returnedAt,  DateTimeFormat.forPattern(pattern));
+        return (this.returnedAt.equals(Constants.NULL_JODATIME))
+                ? null
+                : DateTime.parse(this.returnedAt,  DateTimeFormat.forPattern(pattern));
     }
 
     public void setReturnedAt(String returnedAt) {
@@ -76,6 +82,10 @@ public class Key {
     }
 
     public boolean isTaken() {
-        return (this.takenAt != null);
+        return (this.takenAt != null && !this.takenAt.equals(Constants.NULL_JODATIME));
+    }
+
+    public boolean isReturned() {
+        return (this.returnedAt != null && !this.returnedAt.equals(Constants.NULL_JODATIME));
     }
 }

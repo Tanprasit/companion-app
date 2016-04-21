@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,6 +27,7 @@
         android:layout_above="@+id/login_password_field"
         android:layout_marginBottom="@dimen/navigation_padding_top_default"
         android:background="@drawable/border"
+        android:gravity="center"
         android:hint="@string/email"
         android:inputType="text"
         android:padding="@dimen/textview_padding"
@@ -40,12 +42,15 @@
         android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/navigation_padding_top_default"
         android:background="@drawable/border"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
         android:hint="@string/Password"
         android:inputType="textPassword"
         android:padding="@dimen/textview_padding"
         android:textColor="@color/primary_text_default_material_dark"
         android:textColorHint="@color/primary_text_default_material_dark"
-        android:textSize="@dimen/text_large_size" />
+        android:textSize="@dimen/text_large_size"
+        android:textStyle="normal" />
 
     <Button
         android:id="@+id/login_sign_in_button"
@@ -58,5 +63,15 @@
         android:text="@string/sign_in"
         android:textColor="@color/primary_text_default_material_dark"
         android:textSize="@dimen/text_large_size" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/login_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_sign_in_button"
+        android:buttonTint="@color/primary_text_default_material_dark"
+        android:padding="@dimen/textview_padding"
+        android:text="@string/remember_me"
+        android:textColor="@color/primary_text_default_material_dark" />
 
 </RelativeLayout>

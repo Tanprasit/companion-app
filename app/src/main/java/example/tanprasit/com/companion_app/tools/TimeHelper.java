@@ -65,6 +65,10 @@ public class TimeHelper {
         return dateTime;
     }
 
+    public String getApiFormatDateTime() {
+        return dateTime.toString("yyyy-MM-dd HH:mm:ss");
+    }
+
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTime = this.dateTime.withZone(this.timeZone);

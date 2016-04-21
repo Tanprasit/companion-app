@@ -28,16 +28,31 @@ public class URLBuilder {
         return this.requestURL;
     }
 
+    /**
+     * @param id Device id.
+     * @return url to get device details.
+     */
     public String getDeviceUrl(int id) {
         this.addRelativePath(1, "devices" + "/" + id);
         return this.requestURL;
     }
 
-    public String getRequestURL() {
-        return requestURL;
+    /**
+     * @param id user id
+     * @return url to get keys details that belong to current user.
+     */
+    public String getKeysUrl(int id) {
+        this.addRelativePath(1, "users/" + id + "/keys");
+        return this.requestURL;
     }
 
-    public void setRequestURL(String requestURL) {
-        this.requestURL = requestURL;
+    public String getTimeTakenUrl() {
+        this.addRelativePath(1, "key/taken");
+        return this.requestURL;
+    }
+
+    public String getTimeReturnedUrl() {
+        this.addRelativePath(1, "key/returned");
+        return this.requestURL;
     }
 }

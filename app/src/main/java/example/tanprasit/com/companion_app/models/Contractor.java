@@ -57,4 +57,12 @@ public class Contractor {
     public void setKeys(List<Key> keys) {
         this.keys = keys;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

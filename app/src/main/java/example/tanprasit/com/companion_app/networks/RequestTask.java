@@ -1,7 +1,9 @@
 package example.tanprasit.com.companion_app.networks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -16,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,17 +36,15 @@ public class RequestTask {
     private RequestQueue queue;
     private Map<String, String> postParams;
 
-    public RequestTask(Listener<String> listener, ErrorListener errorListener) {
+    public RequestTask(Listener<String> listener, ErrorListener errorListener, Context context) {
         this.listener = listener;
         this.errorListener = errorListener;
-    }
-
-    public RequestTask(Listener<String> listener, ErrorListener errorListener, Context context) {
-        this(listener, errorListener);
         this.context = context;
         this.queue = VolleySingleton.getInstance(this.context).getRequestQueue();
     }
 
+
+    // TODO currently doesn't handle time out errors.
     // Issue a get request and get a response.
     public void sendGetRequest(final String url) {
         final StringRequest stringRequest = new StringRequest(url, this.listener, new ErrorListener() {
@@ -53,7 +54,16 @@ public class RequestTask {
                 if (nr != null && nr.statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     handleChallenge(error, url, Constants.GET);
                 } else {
-                    Log.e("Get req error", error.getMessage());
+                    // Handles unexpected responses from the server.
+                    String responseBody = "Unexpected error response";
+                    try {
+                        responseBody = new String(error.networkResponse.data, "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        Log.e("UnsupportedEncoding", e.getMessage());
+                        Toast.makeText(context, responseBody, Toast.LENGTH_LONG).show();
+                    }
+                    Toast.makeText(context, responseBody, Toast.LENGTH_SHORT).show();
+                    Log.e("Failed GET", responseBody);
                 }
             }
         });
@@ -80,7 +90,16 @@ public class RequestTask {
                 if (nr != null && nr.statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     handleChallenge(error, url, Constants.POST);
                 } else {
-                    Log.e("Post req error", "Post request failed");
+                    // Handles unexpected responses from the server.
+                    String responseBody = "Unexpected error response";
+                    try {
+                        responseBody = new String(error.networkResponse.data, "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        Log.e("UnsupportedEncoding", e.getMessage());
+                        Toast.makeText(context, responseBody, Toast.LENGTH_LONG).show();
+                    }
+                    Toast.makeText(context, responseBody, Toast.LENGTH_SHORT).show();
+                    Log.e("Failed POST", responseBody);
                 }
             }
         }) {
@@ -136,7 +155,9 @@ public class RequestTask {
 
             this.queue.add(stringRequest);
         } else {
+            // When user fails to enter correct credentials. WWW-Authenticate header will be missing.
             Log.e("Digest Error", "WWW-Authenticate header is missing");
+            Toast.makeText(context, "Login failed, incorrect credentials", Toast.LENGTH_SHORT).show();
         }
     }
 
