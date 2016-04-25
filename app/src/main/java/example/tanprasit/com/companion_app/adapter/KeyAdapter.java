@@ -142,30 +142,37 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
         postParams.put("id", String.valueOf(key.getId()));
         postParams.put("contractor_id", userId);
 
-        final String currentDateTime = timeHelper.getApiFormatDateTime();
 
-        // Depending if the key had been taken update either the taken or return time.
         if (!keyIsTaken) {
-            postParams.put(Constants.TAKEN_PARAM, currentDateTime);
             this.timeTakenUpdated = true;
         } else {
-            postParams.put(Constants.RETURN_PARAM, currentDateTime);
             this.timeReturnedUpdated = true;
         }
 
-        final URLBuilder urlBuilder = new URLBuilder();
+        URLBuilder urlBuilder = new URLBuilder();
+
+        // Check if the key had been taken. If so get the return url or get the key taken
+        // url.
+        final String url = (!keyIsTaken)
+                ? urlBuilder.getTimeTakenUrl()
+                : urlBuilder.getTimeReturnedUrl();
+
 
         // Set listener for updating key taken and returned times.
         holder.keyButton.setOnClickListener(new View.OnClickListener() {
-
-            // Check if the key had been taken. If so get the return url or get the key taken
-            // url.
-            String url = (!keyIsTaken)
-                    ? urlBuilder.getTimeTakenUrl()
-                    : urlBuilder.getTimeReturnedUrl();
-
             @Override
             public void onClick(View v) {
+
+                TimeHelper timeHelper = new TimeHelper();
+                final String currentDateTime = timeHelper.getApiFormatDateTime();
+
+                // Depending if the key had been taken update either the taken or return time.
+                if (!keyIsTaken) {
+                    postParams.put(Constants.TAKEN_PARAM, currentDateTime);
+                } else {
+                    postParams.put(Constants.RETURN_PARAM, currentDateTime);
+                }
+
                 new RequestTask(new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

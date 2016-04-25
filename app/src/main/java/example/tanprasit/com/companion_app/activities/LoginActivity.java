@@ -90,11 +90,13 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    setLoadingAnimation(false);
                     Toast.makeText(getBaseContext(), "Incorrect Credentials.", Toast.LENGTH_SHORT).show();
                 }
             }, getBaseContext()).sendPostRequest(url, params);
         } else {
             Toast.makeText(getBaseContext(), "Missing email or password.", Toast.LENGTH_SHORT).show();
+            setLoadingAnimation(false);
         }
     }
 
