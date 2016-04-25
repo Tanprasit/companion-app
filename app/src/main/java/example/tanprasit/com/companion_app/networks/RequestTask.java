@@ -157,7 +157,7 @@ public class RequestTask {
         } else {
             // When user fails to enter correct credentials. WWW-Authenticate header will be missing.
             Log.e("Digest Error", "WWW-Authenticate header is missing");
-            Toast.makeText(context, "Login failed, incorrect credentials", Toast.LENGTH_SHORT).show();
+            this.errorListener.onErrorResponse(error);
         }
     }
 

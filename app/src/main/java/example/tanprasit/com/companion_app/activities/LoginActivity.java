@@ -27,16 +27,16 @@ import example.tanprasit.com.companion_app.tools.URLBuilder;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
     private SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         setDefaultEmail();
     }
@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        setLoadingAnimation(true);
 
         EditText usernameEditText = (EditText) findViewById(R.id.login_username_field);
         EditText passwordEditText = (EditText) findViewById(R.id.login_password_field);
@@ -69,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
             String url = new URLBuilder().getLoginUrl();
 
+            setLoadingAnimation(true);
             new RequestTask(new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -90,13 +90,12 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    setLoadingAnimation(false);
                     Toast.makeText(getBaseContext(), "Incorrect Credentials.", Toast.LENGTH_SHORT).show();
+                    setLoadingAnimation(false);
                 }
             }, getBaseContext()).sendPostRequest(url, params);
         } else {
             Toast.makeText(getBaseContext(), "Missing email or password.", Toast.LENGTH_SHORT).show();
-            setLoadingAnimation(false);
         }
     }
 
@@ -111,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setLoadingAnimation(final boolean b) {
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
