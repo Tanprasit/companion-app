@@ -31,4 +31,5 @@
     <string name="return_key">Return Key</string>
     <string name="no_keys_to_be_displayed">No keys to be displayed.</string>
     <string name="Pin">Pin</string>
+    <string name="Unactivated">Unactivated</string>
 </resources>

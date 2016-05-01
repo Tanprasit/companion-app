@@ -115,6 +115,7 @@ public class KeyActivity extends AppCompatActivity {
                                 Collections.reverse(keyList);
                                 keyAdapter.swap(keyList);
                             } else {
+                                keyAdapter.clear();
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

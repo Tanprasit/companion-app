@@ -102,7 +102,6 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
 
         holder.firstAddressView.setText(key.getProperty().getAddressLine1());
         holder.secondAddressView.setText(generateSecondAddressLine(key.getProperty()));
-        holder.keyPinView.setText(String.valueOf(key.getPin()));
 
         final boolean keyIsTaken = key.isTaken();
         final boolean keyIsReturned = key.isReturned();
@@ -127,6 +126,12 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
             holder.returnedDateView.setText("N/A");
             holder.returnedTimeView.setText("");
             holder.keyButton.setEnabled(true);
+        }
+
+        if (keyIsTaken) {
+            holder.keyPinView.setText(String.valueOf(key.getPin()));
+        } else {
+            holder.keyPinView.setText(R.string.Unactivated);
         }
 
         holder.keyButton.setText((keyIsTaken)
@@ -166,12 +171,17 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
                 TimeHelper timeHelper = new TimeHelper();
                 final String currentDateTime = timeHelper.getCarbonDateTime();
 
-                // Depending if the key had been taken update either the taken or return time.
+                // Checks if key had been taken yet, then update taken or return time accordingly.
                 if (!keyIsTaken) {
                     postParams.put(Constants.TAKEN_PARAM, currentDateTime);
                 } else {
                     postParams.put(Constants.RETURN_PARAM, currentDateTime);
                 }
+
+                if (keyIsTaken) {
+                    holder.keyPinView.setText(String.valueOf(key.getPin()));
+                }
+
 
                 new RequestTask(new Response.Listener<String>() {
                     @Override
@@ -206,7 +216,7 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String responseBody = "Failed to retreive key list.";
+                        String responseBody = "Failed to retrieve key list.";
                         try {
                             responseBody = new String(error.networkResponse.data, "utf-8");
                         } catch (UnsupportedEncodingException e) {
