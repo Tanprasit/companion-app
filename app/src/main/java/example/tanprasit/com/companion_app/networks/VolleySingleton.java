@@ -29,14 +29,10 @@ public class VolleySingleton {
 
     public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
+            // getApplicationContext() is key, it prevents leaking the
+            // Activity or BroadcastReceiver if the context was passed in accidently.
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
-    }
-
-    public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
     }
 }

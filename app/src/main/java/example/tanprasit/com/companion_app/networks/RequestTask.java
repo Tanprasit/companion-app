@@ -43,7 +43,6 @@ public class RequestTask {
         this.queue = VolleySingleton.getInstance(this.context).getRequestQueue();
     }
 
-
     // TODO currently doesn't handle time out errors.
     // Issue a get request and get a response.
     public void sendGetRequest(final String url) {
@@ -54,16 +53,7 @@ public class RequestTask {
                 if (nr != null && nr.statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     handleChallenge(error, url, Constants.GET);
                 } else {
-                    // Handles unexpected responses from the server.
-                    String responseBody = "Unexpected error response";
-                    try {
-                        responseBody = new String(error.networkResponse.data, "utf-8");
-                    } catch (UnsupportedEncodingException e) {
-                        Log.e("UnsupportedEncoding", e.getMessage());
-                        Toast.makeText(context, responseBody, Toast.LENGTH_LONG).show();
-                    }
-                    Toast.makeText(context, responseBody, Toast.LENGTH_SHORT).show();
-                    Log.e("Failed GET", responseBody);
+                    errorListener.onErrorResponse(error);
                 }
             }
         });
@@ -90,16 +80,7 @@ public class RequestTask {
                 if (nr != null && nr.statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     handleChallenge(error, url, Constants.POST);
                 } else {
-                    // Handles unexpected responses from the server.
-                    String responseBody = "Unexpected error response";
-                    try {
-                        responseBody = new String(error.networkResponse.data, "utf-8");
-                    } catch (UnsupportedEncodingException e) {
-                        Log.e("UnsupportedEncoding", e.getMessage());
-                        Toast.makeText(context, responseBody, Toast.LENGTH_LONG).show();
-                    }
-                    Toast.makeText(context, responseBody, Toast.LENGTH_SHORT).show();
-                    Log.e("Failed POST", responseBody);
+                    errorListener.onErrorResponse(error);
                 }
             }
         }) {
@@ -162,23 +143,25 @@ public class RequestTask {
     }
 
     /**
-     * Gets the Authorization header string minus the "AuthType" and returns a
-     * hashMap of keys and values
+     * Gets the Authorization header hashMap from WWW-Authenticate header.
      *
      * @param headerString
      * @return
      */
     private HashMap<String, String> parseHeader(String headerString) {
-        // Separate out the part of the string which tells you which Auth scheme
-        // is it
+        // Remove Auth scheme from string.
         String headerStringWithoutScheme = headerString.substring(
                 headerString.indexOf(" ") + 1).trim();
+
+        // Split each pair into an array.
         HashMap<String, String> values = new HashMap<>();
-        String keyValueArray[] = headerStringWithoutScheme.split(",");
-        for (String keyval : keyValueArray) {
-            if (keyval.contains("=")) {
-                String key = keyval.substring(0, keyval.indexOf("="));
-                String value = keyval.substring(keyval.indexOf("=") + 1);
+        String headerPair[] = headerStringWithoutScheme.split(",");
+
+        // Loop through each pair and store the key and its value in a map.
+        for (String pair : headerPair) {
+            if (pair.contains("=")) {
+                String key = pair.substring(0, pair.indexOf("="));
+                String value = pair.substring(pair.indexOf("=") + 1);
                 values.put(key.trim(), value.replaceAll("\"", "").trim());
             }
         }

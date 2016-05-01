@@ -28,18 +28,6 @@ public class TimeHelper {
      * Create a human readable string from a timestamp. Taking into consideration daylight saving time.
      * @return a string of time e.g. 30 December 1993 12:00
      */
-    public String getReadableDateAndTime() {
-        return this.dateTime.toString("dd MMMM yyyy HH:mm");
-    }
-
-    public String getReadableTime() {
-        return this.dateTime.toString("HH:mm");
-    }
-
-    public String getReadableDate() {
-        return this.dateTime.toString("dd MMMM yyyy");
-    }
-
     public String getReadableTimeForCard() {
         return this.dateTime.toString("HH:mm");
     }
@@ -65,7 +53,7 @@ public class TimeHelper {
         return dateTime;
     }
 
-    public String getApiFormatDateTime() {
+    public String getCarbonDateTime() {
         return dateTime.toString("yyyy-MM-dd HH:mm:ss");
     }
 

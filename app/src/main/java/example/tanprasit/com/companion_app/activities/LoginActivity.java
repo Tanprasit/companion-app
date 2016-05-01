@@ -1,5 +1,6 @@
 package example.tanprasit.com.companion_app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -7,11 +8,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -53,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
+        // Hide keyboard on credential submission.
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         EditText usernameEditText = (EditText) findViewById(R.id.login_username_field);
         EditText passwordEditText = (EditText) findViewById(R.id.login_password_field);
@@ -90,12 +96,17 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getBaseContext(), "Incorrect Credentials.", Toast.LENGTH_SHORT).show();
+                    NetworkResponse nr = error.networkResponse;
+
+                    Toast.makeText(getBaseContext(), (nr != null && nr.data != null)
+                            ? "Incorrect credentials."
+                            : "Unexpected error had occurred.", Toast.LENGTH_LONG).show();
+
                     setLoadingAnimation(false);
                 }
             }, getBaseContext()).sendPostRequest(url, params);
         } else {
-            Toast.makeText(getBaseContext(), "Missing email or password.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Missing email or password.", Toast.LENGTH_LONG).show();
         }
     }
 

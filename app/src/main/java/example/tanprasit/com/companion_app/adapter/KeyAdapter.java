@@ -164,7 +164,7 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
             public void onClick(View v) {
 
                 TimeHelper timeHelper = new TimeHelper();
-                final String currentDateTime = timeHelper.getApiFormatDateTime();
+                final String currentDateTime = timeHelper.getCarbonDateTime();
 
                 // Depending if the key had been taken update either the taken or return time.
                 if (!keyIsTaken) {
