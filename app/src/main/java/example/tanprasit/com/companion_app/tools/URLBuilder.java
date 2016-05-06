@@ -8,7 +8,7 @@ import example.tanprasit.com.companion_app.Constants;
 public class URLBuilder {
 
     //    private String baseURL= "ec2-54-229-185-207.eu-west-1.compute.amazonaws.com";
-    public static String baseURL = "192.168.0.8:8000";
+    public static String baseURL = "192.168.0.11:8000";
     private String requestURL;
 
     public URLBuilder() {

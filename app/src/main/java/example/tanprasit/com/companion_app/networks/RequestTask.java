@@ -46,7 +46,7 @@ public class RequestTask {
     // TODO currently doesn't handle time out errors.
     // Issue a get request and get a response.
     public void sendGetRequest(final String url) {
-        final StringRequest stringRequest = new StringRequest(url, this.listener, new ErrorListener() {
+        StringRequest stringRequest = new StringRequest(url, this.listener, new ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse nr = error.networkResponse;

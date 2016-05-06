@@ -131,7 +131,7 @@ public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
         if (keyIsTaken) {
             holder.keyPinView.setText(String.valueOf(key.getPin()));
         } else {
-            holder.keyPinView.setText(R.string.Unactivated);
+            holder.keyPinView.setText(R.string.Inactivated);
         }
 
         holder.keyButton.setText((keyIsTaken)

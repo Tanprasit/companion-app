@@ -47,11 +47,13 @@ public class LoginActivity extends AppCompatActivity {
     private void setDefaultEmail() {
         EditText editText = (EditText) findViewById(R.id.login_username_field);
 
+        CheckBox checkBox = (CheckBox) findViewById(R.id.login_checkbox);
+
         if (this.sharedPreferences.getBoolean(Constants.REMEMBER_ME, false)) {
             editText.setText(this.sharedPreferences.getString(Constants.CURRENT_EMAIL, ""));
-
-            CheckBox checkBox = (CheckBox) findViewById(R.id.login_checkbox);
             checkBox.setChecked(true);
+        } else {
+            checkBox.setChecked(false);
         }
     }
 
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordEditText = (EditText) findViewById(R.id.login_password_field);
 
         final String email = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        final String password = passwordEditText.getText().toString();
 
         if (!email.equals("") && !password.equals("")) {
 
@@ -116,7 +118,9 @@ public class LoginActivity extends AppCompatActivity {
         if (checkBox.isChecked()) {
             editor.putString(Constants.CURRENT_EMAIL, email);
             editor.putBoolean(Constants.REMEMBER_ME, true);
-
+        } else {
+            editor.remove(Constants.CURRENT_EMAIL);
+            editor.putBoolean(Constants.REMEMBER_ME, false);
         }
     }
 

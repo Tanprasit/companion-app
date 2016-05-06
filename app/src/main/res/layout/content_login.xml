@@ -71,7 +71,9 @@
         android:layout_below="@id/login_sign_in_button"
         android:buttonTint="@color/primary_text_default_material_dark"
         android:padding="@dimen/textview_padding"
+        android:checked="false"
         android:text="@string/remember_me"
-        android:textColor="@color/primary_text_default_material_dark" />
+        android:textColor="@color/primary_text_default_material_dark"
+        android:clickable="true" />
 
 </RelativeLayout>

@@ -7,10 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -38,7 +37,6 @@ public class KeyActivity extends AppCompatActivity {
     // Prevents back button from returning to empty back activity.
     @Override
     public void onBackPressed() {
-
     }
 
     @Override
@@ -52,28 +50,29 @@ public class KeyActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Key List");
         }
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activity_key_recycler_view);
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_key_refresh_layout);
 
+        // Grabs contractor object from local storage.
         contractor = getContractorFromPreference();
 
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_key_refresh_layout);
         // Set listener for keys manual refresh.
         setRefreshListener(swipeRefreshLayout);
 
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_key_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         final List<Key> keyList = contractor.getKeys();
         Collections.reverse(contractor.getKeys());
 
-        // specify an adapter (see also next example)
+        // specify an adapter.
         keyAdapter = new KeyAdapter(keyList);
-        mRecyclerView.setAdapter(keyAdapter);
+        recyclerView.setAdapter(keyAdapter);
 
         if (keyList.size() == 0) {
             runOnUiThread(new Runnable() {
@@ -93,7 +92,7 @@ public class KeyActivity extends AppCompatActivity {
             throw new RuntimeException("Failed to load user object");
         }
 
-        return new Gson().fromJson(userObj,Contractor.class);
+        return new Gson().fromJson(userObj, Contractor.class);
     }
 
     private void setRefreshListener(final SwipeRefreshLayout swipeRefreshLayout) {
